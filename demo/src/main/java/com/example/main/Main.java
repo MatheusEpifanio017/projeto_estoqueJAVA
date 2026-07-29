@@ -13,9 +13,6 @@ public class Main {
         List<Produto> produtos = BancoDados.carregar();
 
         if (produtos.isEmpty()) {
-            produtos.add(new Produto("Café", 25.0, 4));
-            produtos.add(new Produto("Leite", 8.0, 10));
-            produtos.add(new Produto("Pão", 12.0, 6));
             BancoDados.salvar(produtos);
         }
 
@@ -46,27 +43,30 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.print("Digite o código do produto: ");
-                    int codBusca = scanner.nextInt();
-                    Produto pEncontrado = buscarProduto(produtos, codBusca);
-                    
-                    if (pEncontrado != null) {
-                        pEncontrado.exibirResumo();
-                        System.out.println("Valor total em estoque: R$ " + pEncontrado.calcularValorEstoque());
-                    } else {
-                        System.out.println("Produto não encontrado!");
-                    }
-                    break;
+                  System.out.print("Digite o código do produto: ");
+                  int codBusca = scanner.nextInt();
+                  Produto pEncontrado = buscarProduto(produtos, codBusca);
+                
+                  if (pEncontrado != null) {
+                    System.out.println("\n--- Produto Encontrado ---");
+                    System.out.println("Nome: " + pEncontrado.getNome());
+                    System.out.println("Preço: R$ " + pEncontrado.getPreco());
+                    System.out.println("Quantidade em Estoque: " + pEncontrado.getQuantidade());
+                   
+                 } else {
+                    System.out.println("\nProduto não encontrado!");
+                }
+                break;
 
                 case 3:
                     if (produtos.isEmpty()) {
-                        System.out.println("Lista vazia.");
+                        System.out.println("\nLista vazia.");
                     } else {
                         Produto maisCaro = produtos.get(0);
                         for (Produto prod : produtos) {
                             if (prod.getPreco() > maisCaro.getPreco()) maisCaro = prod;
                         }
-                        System.out.print("Produto mais caro: ");
+                        System.out.print("\nProduto mais caro: ");
                         maisCaro.exibirResumo();
                     }
                     break;
@@ -80,7 +80,7 @@ public class Main {
                         System.out.print("Quantidade a adicionar: ");
                         int qtdAdd = scanner.nextInt();
                         if (pAdd.adicionarEstoque(qtdAdd)) {
-                            // 💾 Salva a alteração no JSON
+                            
                             BancoDados.salvar(produtos);
                             System.out.println("Estoque atualizado com sucesso!");
                         } else {
@@ -100,7 +100,7 @@ public class Main {
                         System.out.print("Quantidade a retirar: ");
                         int qtdRem = scanner.nextInt();
                         if (pRem.removerEstoque(qtdRem)) {
-                            // 💾 Salva a alteração no JSON
+                           
                             BancoDados.salvar(produtos);
                             System.out.println("Estoque retirado com sucesso!");
                         } else {
@@ -128,7 +128,7 @@ public class Main {
                             double valorPct = scanner.nextDouble();
                             
                             if (pDesc.aplicarDesconto(valorPct)) {
-                                // 💾 Salva a alteração no JSON
+                               
                                 BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
@@ -139,7 +139,7 @@ public class Main {
                             double valorFixo = scanner.nextDouble();
                             
                             if (pDesc.aplicarDesconto(valorFixo, true)) {
-                                // 💾 Salva a alteração no JSON
+                               
                                 BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
@@ -170,7 +170,7 @@ public class Main {
                         Produto novoProduto = new Produto(nome, preco, quantidade);
                         produtos.add(novoProduto);
                         
-                        // 💾 Salva o novo produto no JSON
+                       
                         BancoDados.salvar(produtos);
                         
                         System.out.println("✅ Produto cadastrado e salvo com sucesso!");
@@ -182,7 +182,7 @@ public class Main {
                     break; 
 
                 case 0:
-                    // 💾 Salvamento final antes de sair
+                    
                     BancoDados.salvar(produtos);
                     System.out.println("Encerrando o sistema. Até logo!");
                     break;
