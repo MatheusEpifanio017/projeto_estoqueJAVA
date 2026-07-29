@@ -1,18 +1,23 @@
 package com.example.main;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import com.example.model.BancoDados;
 import com.example.model.Produto;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<Produto> produtos = new ArrayList<>();
 
-        produtos.add(new Produto( "Café", 25.0, 4));
-        produtos.add(new Produto( "Leite", 8.0, 10));
-        produtos.add(new Produto( "Pão", 12.0, 6));
+        List<Produto> produtos = BancoDados.carregar();
+
+        if (produtos.isEmpty()) {
+            produtos.add(new Produto("Café", 25.0, 4));
+            produtos.add(new Produto("Leite", 8.0, 10));
+            produtos.add(new Produto("Pão", 12.0, 6));
+            BancoDados.salvar(produtos);
+        }
 
         int opcao;
 
@@ -29,7 +34,7 @@ public class Main {
             System.out.print("\nEscolha uma opção: ");
             
             opcao = scanner.nextInt();
-          
+
             switch (opcao) {
                 case 1: 
                     System.out.println("\n--- Lista de Produtos ---");
@@ -75,6 +80,8 @@ public class Main {
                         System.out.print("Quantidade a adicionar: ");
                         int qtdAdd = scanner.nextInt();
                         if (pAdd.adicionarEstoque(qtdAdd)) {
+                            // 💾 Salva a alteração no JSON
+                            BancoDados.salvar(produtos);
                             System.out.println("Estoque atualizado com sucesso!");
                         } else {
                             System.out.println("Quantidade inválida.");
@@ -93,6 +100,8 @@ public class Main {
                         System.out.print("Quantidade a retirar: ");
                         int qtdRem = scanner.nextInt();
                         if (pRem.removerEstoque(qtdRem)) {
+                            // 💾 Salva a alteração no JSON
+                            BancoDados.salvar(produtos);
                             System.out.println("Estoque retirado com sucesso!");
                         } else {
                             System.out.println("Falha na retirada (Estoque insuficiente ou valor inválido).");
@@ -103,8 +112,7 @@ public class Main {
                     break;
 
                 case 6:
-
-                  System.out.print("Digite o código do produto para dar desconto: ");
+                    System.out.print("Digite o código do produto para dar desconto: ");
                     int codDesc = scanner.nextInt();
                     Produto pDesc = buscarProduto(produtos, codDesc);
                     
@@ -120,6 +128,8 @@ public class Main {
                             double valorPct = scanner.nextDouble();
                             
                             if (pDesc.aplicarDesconto(valorPct)) {
+                                // 💾 Salva a alteração no JSON
+                                BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
                                 System.out.println("Erro: Porcentagem inválida ou acima de 50%.");
@@ -129,6 +139,8 @@ public class Main {
                             double valorFixo = scanner.nextDouble();
                             
                             if (pDesc.aplicarDesconto(valorFixo, true)) {
+                                // 💾 Salva a alteração no JSON
+                                BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
                                 System.out.println("Erro: Valor inválido ou maior que o preço do produto.");
@@ -140,11 +152,9 @@ public class Main {
                         System.out.println("Produto não encontrado.");
                     }
                     break;
-                
-                case 7:
 
+                case 7:
                     System.out.println("\n--- Cadastrar Novo Produto ---");
-                
                     scanner.nextLine(); 
                     
                     System.out.print("Digite o nome do produto: ");
@@ -157,19 +167,23 @@ public class Main {
                     int quantidade = scanner.nextInt();
                     
                     try {
-                       
                         Produto novoProduto = new Produto(nome, preco, quantidade);
                         produtos.add(novoProduto);
                         
-                        System.out.println("✅ Produto cadastrado com sucesso!");
+                        // 💾 Salva o novo produto no JSON
+                        BancoDados.salvar(produtos);
+                        
+                        System.out.println("✅ Produto cadastrado e salvo com sucesso!");
                         System.out.println("Código gerado: " + novoProduto.getCodigo()); 
                         
                     } catch (IllegalArgumentException e) {
                         System.out.println("❌ Erro: Preço e quantidade não podem ser valores negativos.");
                     }
-                    break;     
+                    break; 
 
                 case 0:
+                    // 💾 Salvamento final antes de sair
+                    BancoDados.salvar(produtos);
                     System.out.println("Encerrando o sistema. Até logo!");
                     break;
 
