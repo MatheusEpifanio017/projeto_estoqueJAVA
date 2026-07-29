@@ -1,18 +1,17 @@
 package com.example.model;
 
+
 public class Produto {
 
     private final int codigo;
-
     private String nome;
-
     private double preco;
-
     private int quantidade; 
 
     private static final double DESCONTO_MAXIMO = 50;
 
     private static int totalProdutos;
+
 
     public Produto(String nome, double preco, int quantidade) {
         if (preco < 0 || quantidade < 0) {
