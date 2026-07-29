@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BancoDados {
     
-    private static final String ARQUIVO_JSON ="produtos.json";
+    private static final String ARQUIVO_JSON ="estoque.json";
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
