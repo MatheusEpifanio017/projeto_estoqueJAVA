@@ -29,11 +29,11 @@ public class Main {
             System.out.println("7. Adicionar novo item no estoque");
             System.out.println("0. Fechar");
             System.out.print("\nEscolha uma opção: ");
-            
+
             opcao = scanner.nextInt();
 
             switch (opcao) {
-                case 1: 
+                case 1:
                     System.out.println("\n--- Lista de Produtos ---");
                     if (produtos.isEmpty()) {
                         System.out.println("Nenhum produto cadastrado.");
@@ -43,20 +43,20 @@ public class Main {
                     break;
 
                 case 2:
-                  System.out.print("Digite o código do produto: ");
-                  int codBusca = scanner.nextInt();
-                  Produto pEncontrado = buscarProduto(produtos, codBusca);
-                
-                  if (pEncontrado != null) {
-                    System.out.println("\n--- Produto Encontrado ---");
-                    System.out.println("Nome: " + pEncontrado.getNome());
-                    System.out.println("Preço: R$ " + pEncontrado.getPreco());
-                    System.out.println("Quantidade em Estoque: " + pEncontrado.getQuantidade());
-                   
-                 } else {
-                    System.out.println("\nProduto não encontrado!");
-                }
-                break;
+                    System.out.print("Digite o código do produto: ");
+                    int codBusca = scanner.nextInt();
+                    Produto pEncontrado = buscarProduto(produtos, codBusca);
+
+                    if (pEncontrado != null) {
+                        System.out.println("\n--- Produto Encontrado ---");
+                        System.out.println("Nome: " + pEncontrado.getNome());
+                        System.out.println("Preço: R$ " + pEncontrado.getPreco());
+                        System.out.println("Quantidade em Estoque: " + pEncontrado.getQuantidade());
+
+                    } else {
+                        System.out.println("\nProduto não encontrado!");
+                    }
+                    break;
 
                 case 3:
                     if (produtos.isEmpty()) {
@@ -64,7 +64,8 @@ public class Main {
                     } else {
                         Produto maisCaro = produtos.get(0);
                         for (Produto prod : produtos) {
-                            if (prod.getPreco() > maisCaro.getPreco()) maisCaro = prod;
+                            if (prod.getPreco() > maisCaro.getPreco())
+                                maisCaro = prod;
                         }
                         System.out.print("\nProduto mais caro: ");
                         maisCaro.exibirResumo();
@@ -75,12 +76,12 @@ public class Main {
                     System.out.print("Código do produto para entrada: ");
                     int codAdd = scanner.nextInt();
                     Produto pAdd = buscarProduto(produtos, codAdd);
-                    
+
                     if (pAdd != null) {
                         System.out.print("Quantidade a adicionar: ");
                         int qtdAdd = scanner.nextInt();
                         if (pAdd.adicionarEstoque(qtdAdd)) {
-                            
+
                             BancoDados.salvar(produtos);
                             System.out.println("Estoque atualizado com sucesso!");
                         } else {
@@ -95,12 +96,12 @@ public class Main {
                     System.out.print("Código do produto para saída: ");
                     int codRem = scanner.nextInt();
                     Produto pRem = buscarProduto(produtos, codRem);
-                    
+
                     if (pRem != null) {
                         System.out.print("Quantidade a retirar: ");
                         int qtdRem = scanner.nextInt();
                         if (pRem.removerEstoque(qtdRem)) {
-                           
+
                             BancoDados.salvar(produtos);
                             System.out.println("Estoque retirado com sucesso!");
                         } else {
@@ -115,20 +116,20 @@ public class Main {
                     System.out.print("Digite o código do produto para dar desconto: ");
                     int codDesc = scanner.nextInt();
                     Produto pDesc = buscarProduto(produtos, codDesc);
-                    
+
                     if (pDesc != null) {
                         System.out.println("\nTipo de Desconto:");
                         System.out.println("1. Porcentagem (%)");
                         System.out.println("2. Valor Fixo (R$)");
                         System.out.print("Escolha o tipo: ");
                         int tipoDesc = scanner.nextInt();
-                        
+
                         if (tipoDesc == 1) {
                             System.out.print("Digite a porcentagem (máx 50%): ");
                             double valorPct = scanner.nextDouble();
-                            
+
                             if (pDesc.aplicarDesconto(valorPct)) {
-                               
+
                                 BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
@@ -137,9 +138,9 @@ public class Main {
                         } else if (tipoDesc == 2) {
                             System.out.print("Digite o valor fixo em R$: ");
                             double valorFixo = scanner.nextDouble();
-                            
+
                             if (pDesc.aplicarDesconto(valorFixo, true)) {
-                               
+
                                 BancoDados.salvar(produtos);
                                 System.out.println("Desconto aplicado! Novo preço: R$ " + pDesc.getPreco());
                             } else {
@@ -155,34 +156,33 @@ public class Main {
 
                 case 7:
                     System.out.println("\n--- Cadastrar Novo Produto ---");
-                    scanner.nextLine(); 
-                    
+                    scanner.nextLine();
+
                     System.out.print("Digite o nome do produto: ");
                     String nome = scanner.nextLine();
-                    
+
                     System.out.print("Digite o preço do produto: ");
                     double preco = scanner.nextDouble();
-                    
+
                     System.out.print("Digite a quantidade inicial em estoque: ");
                     int quantidade = scanner.nextInt();
-                    
+
                     try {
                         Produto novoProduto = new Produto(nome, preco, quantidade);
                         produtos.add(novoProduto);
-                        
-                       
+
                         BancoDados.salvar(produtos);
-                        
+
                         System.out.println("Produto cadastrado e salvo com sucesso!");
-                        System.out.println("Código gerado: " + novoProduto.getCodigo()); 
-                        
+                        System.out.println("Código gerado: " + novoProduto.getCodigo());
+
                     } catch (IllegalArgumentException e) {
                         System.out.println("Erro: Preço e quantidade não podem ser valores negativos.");
                     }
-                    break; 
+                    break;
 
                 case 0:
-                    
+
                     BancoDados.salvar(produtos);
                     System.out.println("Encerrando o sistema.");
                     break;
