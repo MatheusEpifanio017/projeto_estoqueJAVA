@@ -19,7 +19,7 @@ public class Main {
         int opcao;
 
         do {
-            System.out.println("\n=== MENU INTERATIVO DE PRODUTOS ===");
+            System.out.println("\n==== GERENCIADOR DE ESTOQUE ====");
             System.out.println("1. Listar todos os produtos");
             System.out.println("2. Buscar produto por código");
             System.out.println("3. Ver produto mais caro");
@@ -160,7 +160,7 @@ public class Main {
                     System.out.print("Digite o nome do produto: ");
                     String nome = scanner.nextLine();
                     
-                    System.out.print("Digite o preço do produto (ex: 5,50): ");
+                    System.out.print("Digite o preço do produto: ");
                     double preco = scanner.nextDouble();
                     
                     System.out.print("Digite a quantidade inicial em estoque: ");
@@ -173,18 +173,18 @@ public class Main {
                        
                         BancoDados.salvar(produtos);
                         
-                        System.out.println("✅ Produto cadastrado e salvo com sucesso!");
+                        System.out.println("Produto cadastrado e salvo com sucesso!");
                         System.out.println("Código gerado: " + novoProduto.getCodigo()); 
                         
                     } catch (IllegalArgumentException e) {
-                        System.out.println("❌ Erro: Preço e quantidade não podem ser valores negativos.");
+                        System.out.println("Erro: Preço e quantidade não podem ser valores negativos.");
                     }
                     break; 
 
                 case 0:
                     
                     BancoDados.salvar(produtos);
-                    System.out.println("Encerrando o sistema. Até logo!");
+                    System.out.println("Encerrando o sistema.");
                     break;
 
                 default:
