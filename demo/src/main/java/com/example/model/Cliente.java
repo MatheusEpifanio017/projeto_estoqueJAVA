@@ -1,27 +1,44 @@
 package com.example.model;
 
-public class Cliente {
-    
-    private int codigo;
-    private String nome;
- 
-    private static int totalClientes;
+public class Cliente extends Usuario {
 
-    public Cliente(String nome) {
-        codigo = ++totalClientes;
-        this.nome = nome;
-      
+    private int codigo;
+    private int pontos;
+    private static int totalClientes = 0;
+
+    public Cliente(String nome, String documento, int pontos) {
+        super(nome,documento);
+        this.pontos = pontos;
+        this.codigo = ++totalClientes;
     }
-    
+
+    public int getPontos() { return pontos; }
+
     public int getCodigo() {
         return codigo;
     }
 
-    public String getNome() {
-        return nome;
+    public void setPontos(int pontos) {
+        if (pontos < 0) {
+            throw new IllegalArgumentException("Pontos não podem ser negativos");
+        }
+
+        this.pontos = pontos;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void adicionarPontos(int qtd) {
+        if (qtd > 0) {
+            this.pontos += qtd;
+        }
     }
+
+    @Override
+    public void exibirDados() {
+        System.out.println("--- Dados do Cliente ---");
+        System.out.println("Código: " + this.codigo);
+        super.exibirDados();
+        System.out.println("Pontos: " + pontos);
+    }
+
+    
 }
