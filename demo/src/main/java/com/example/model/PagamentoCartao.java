@@ -1,6 +1,6 @@
 package com.example.model;
 
-public class PagamentoCartao extends Pagamento {
+public class PagamentoCartao extends Pagamento implements Pagavel{
 
     private double percentualTaxa;
 
@@ -16,10 +16,8 @@ public class PagamentoCartao extends Pagamento {
 
     @Override
     public void processar() {
-        System.out.println("=======================================");
+        System.out.println("---------------------------------------");
         System.out.println("Pagamento via Cratão " + calcularTotal());
-        System.out.println("Valor da compra " + valor);
-        System.out.println("Valor da taxa " + calcularTaxa());
         
     }
 }

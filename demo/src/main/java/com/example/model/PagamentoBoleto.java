@@ -16,9 +16,8 @@ public class PagamentoBoleto extends Pagamento {
 
     @Override
     public void processar() {
-        System.out.println("=======================================");
+        System.out.println("---------------------------------------");
         System.out.println("Pagamendo via Boleto " + calcularTotal());
-        System.out.println("Valor da compra " + valor);
-        System.out.println("Valor da taxa " + taxaFixa);
+        
     }
 }

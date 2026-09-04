@@ -1,6 +1,6 @@
 package com.example.model;
 
-public abstract class Pagamento {
+public abstract class Pagamento implements Pagavel {
     public double valor;
 
     public Pagamento(double valor) {
