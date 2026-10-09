@@ -7,7 +7,7 @@ public class Cliente extends Usuario {
     private static int totalClientes = 0;
 
     public Cliente(String nome, String documento, int pontos) {
-        super(nome,documento);
+        super(nome, documento);
         this.pontos = pontos;
         this.codigo = ++totalClientes;
     }

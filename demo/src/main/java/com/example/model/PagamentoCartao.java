@@ -16,8 +16,8 @@ public class PagamentoCartao extends Pagamento implements Pagavel{
 
     @Override
     public void processar() {
-        System.out.println("---------------------------------------");
-        System.out.println("Pagamento via Cratão " + calcularTotal());
+        System.out.println("-----------------------------------------------");
+        System.out.println("Pagamento via Cratão  " + String.format("%.2f", calcularTotal()));
         
     }
 }

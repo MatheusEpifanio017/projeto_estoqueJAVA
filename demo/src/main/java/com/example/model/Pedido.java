@@ -1,66 +1,40 @@
 package com.example.model;
 
+import java.util.ArrayList;
+
 public class Pedido {
 
-    private static int totalNumeros = 0;
-
-    private int numero;
     private Cliente cliente;
-    private Produto produto;
-    private int quantidade;
+    private ArrayList<ItemPedido> itens;
 
-    public Pedido(Cliente cliente, Produto produto, int quantidade) {
-
+    public Pedido(Cliente cliente) {
         if (cliente == null) {
-            throw new IllegalArgumentException("Cliente inválido");
-        }
-
-        if (produto == null) {
-            throw new IllegalArgumentException("Produto inválido");
-        }
-
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade deve ser maior que zero");
-        }
-
-        if (quantidade > produto.getQuantidade()) {
-            throw new IllegalArgumentException("Quantidade maior que o estoque disponível");
+            throw new IllegalArgumentException("O pedido precisa de um cliente.");
         }
 
         this.cliente = cliente;
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.numero = ++totalNumeros;
-    }
-
-    public int getNumero() {
-        return numero;
+        this.itens = new ArrayList<>();
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public void adicionarItem(Produto produto, int quantidade) {
+        itens.add(new ItemPedido(produto, quantidade));
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public ArrayList<ItemPedido> getItens() {
+        return itens;
     }
 
-    public void exibirResumo() {
-        System.out.println("Pedido: " + numero);
-        System.out.println("Cliente: " + cliente.getNome());
-        System.out.println(
-            "Produto: " + produto.getNome() +
-            " | Preço: R$ " + produto.getPreco()
-        );
-        System.out.println("Quantidade: " + quantidade);
-        System.out.println("Valor total: R$ " + calcularValorTotal());
-    }
+    public double calcularTotal() {
+        double total = 0;
 
-    public double calcularValorTotal() {
-        return produto.getPreco() * quantidade;
+        for (ItemPedido item : itens) {
+            total += item.calcularSubtotal();
+        }
+
+        return total;
     }
 }

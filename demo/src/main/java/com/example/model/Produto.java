@@ -1,3 +1,4 @@
+
 package com.example.model;
 
 public class Produto {
@@ -8,7 +9,6 @@ public class Produto {
     private int quantidade;
 
     private static final double DESCONTO_MAXIMO = 50;
-
     private static int totalProdutos;
 
     public Produto(String nome, double preco, int quantidade) {
@@ -17,7 +17,6 @@ public class Produto {
         }
 
         codigo = ++totalProdutos;
-
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
@@ -41,7 +40,9 @@ public class Produto {
 
     public void setPreco(double preco) {
         if (preco < 0) {
-            throw new IllegalArgumentException("Preço não pode ser negativo");
+            throw new IllegalArgumentException(
+                "Preço não pode ser negativo"
+            );
         }
 
         this.preco = preco;
@@ -53,7 +54,9 @@ public class Produto {
 
     public void setQuantidade(int quantidade) {
         if (quantidade < 0) {
-            throw new IllegalArgumentException("Quantidade não pode ser negativa");
+            throw new IllegalArgumentException(
+                "Quantidade não pode ser negativa"
+            );
         }
 
         this.quantidade = quantidade;
